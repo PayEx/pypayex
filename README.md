@@ -28,4 +28,4 @@ User performs the payment on the URL in `response['redirectURL']`, and is redire
     response = service.complete(orderRef='GENERATED_ORDER_REF')
 	
 	# Transaction was successfully performed
-	response['errorCode'] == 'OK' and response['transactionStatus'] == 0
+	response['status']['errorCode'] == 'OK' and response['transactionStatus'] == '0'
