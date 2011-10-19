@@ -35,13 +35,28 @@ class TestIntegration(unittest.TestCase):
     def testPayment(self):
         
         # Needs credentials to test
-        if MERCHANT_NUMBER == '' or ENCRYPTION_KEY == '':
-            return
+        self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
         
-        service = Payex(merchant_number=MERCHANT_NUMBER, encryption_key=ENCRYPTION_KEY, production=False)
+        service = Payex(merchant_number=MERCHANT_NUMBER, 
+                        encryption_key=ENCRYPTION_KEY, 
+                        production=False
+                       )
         
         # Initialize a payment
-        response = service.initialize(purchaseOperation='AUTHORIZATION', price='5000', currency='NOK', vat='2500', orderID='test1', productNumber='123', description=u'This is a test.', clientIPAddress='127.0.0.1', clientIdentifier='USERAGENT=test&username=testuser', additionalValues='PAYMENTMENU=TRUE', returnUrl='http://example.org/return', view='PX', cancelUrl='http://example.org/cancel')
+        response = service.initialize(purchaseOperation='AUTHORIZATION', 
+                                      price='5000', 
+                                      currency='NOK', 
+                                      vat='2500', 
+                                      orderID='test1', 
+                                      productNumber='123', 
+                                      description=u'This is a test.', 
+                                      clientIPAddress='127.0.0.1',  
+                                      clientIdentifier='USERAGENT=test&username=testuser', 
+                                      additionalValues='PAYMENTMENU=TRUE', 
+                                      returnUrl='http://example.org/return', 
+                                      view='PX', 
+                                      cancelUrl='http://example.org/cancel'
+                                     )
         
         # Check the response
         self.assertEquals(type(response), XmlDictConfig)
