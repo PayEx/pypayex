@@ -1,4 +1,5 @@
 from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler
+from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler
 
 
 class Payex(object):
@@ -13,7 +14,11 @@ class Payex(object):
         self.encryption_key = encryption_key
         self.production = production
         
-        # Add handlers
+        # Add agreement handlers
+        self.add_resource('create_agreement', PxCreateAgreement3Handler)
+        self.add_resource('autopay', PxAutoPay2Handler)
+
+        # Add order handlers
         self.add_resource('initialize', PxOrderInitialize7Handler)
         self.add_resource('complete', PxOrderCompleteHandler)
     
