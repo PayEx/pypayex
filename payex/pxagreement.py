@@ -1,5 +1,4 @@
 from suds.client import Client
-
 from payex.handlers import BaseHandler
 
 class PxAgreementHandler(BaseHandler):
@@ -69,6 +68,26 @@ class PxDeleteAgreementHandler(PxAgreementHandler):
 
         # Set SOAP endpoint and send request
         self._endpoint = self._client.service.DeleteAgreement
+
+        return self._send_request()
+
+class PxAgreementCheckHandler(PxAgreementHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxagreement/agreementcheck/
+    """
+    
+    field_order = [
+        'accountNumber',
+        'agreementRef',
+    ]
+    
+    def __call__(self, *args, **kwargs):
+
+        super(PxAgreementCheckHandler, self).__call__(*args, **kwargs)
+
+        # Set SOAP endpoint and send request
+        self._endpoint = self._client.service.AgreementCheck
 
         return self._send_request()
 
