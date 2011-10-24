@@ -2,11 +2,10 @@ from collections import OrderedDict
 from xml.etree import ElementTree
 import hashlib
 import logging
-
+from payex.utils import smart_str
 from suds import WebFault
 
 from payex.utils import XmlDictConfig, normalize_dictionary_values
-
 logger = logging.getLogger(__name__)
 
 
@@ -28,6 +27,9 @@ class BaseHandler(object):
         # Include object variables that are in field_order
         for key, val in self.__dict__.iteritems():
             if key in self.field_order:
+                if isinstance(val, str,):
+                    # turn into unicode
+                    val = val.decode('utf8')
                 params[key] = val
         
         # Set missing parameters as empty strings
@@ -58,7 +60,7 @@ class BaseHandler(object):
         str_hash = ''
         
         for key, val in self._get_params().iteritems():
-            str_hash += val
+            str_hash += smart_str(val)
         
         # Append the encryption string
         str_hash += self._service.encryption_key
