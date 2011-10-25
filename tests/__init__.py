@@ -16,33 +16,36 @@ class TestService(unittest.TestCase):
     """
 
     def testServiceSetup(self):
-
+        
         service = Payex(merchant_number='123', encryption_key='secret-string')
-
+        
         # Check default values and setting of kwargs
         self.assertEquals(service.accountNumber, '123')
         self.assertEquals(service.encryption_key, 'secret-string')
         self.assertFalse(service.production)
-
+        
         # Check that handlers are present
         self.assertTrue(isinstance(service.initialize, PxOrderInitialize7Handler))
         self.assertTrue(isinstance(service.complete, PxOrderCompleteHandler))
 
-class TestIntegration(unittest.TestCase):
+class TestOrders(unittest.TestCase):
     """
-    Test the initialize7 method.
+    Test the PxOrder methods.
     """
-
+    
     def testPayment(self):
-
+        """
+        Test the initialize7 and complete method.
+        """
+        
         # Needs credentials to test
         self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
-
+        
         service = Payex(merchant_number=MERCHANT_NUMBER,
                         encryption_key=ENCRYPTION_KEY,
                         production=False
                        )
-
+        
         # Initialize a payment
         response = service.initialize(purchaseOperation='AUTHORIZATION',
                                       price='5000',
@@ -50,7 +53,7 @@ class TestIntegration(unittest.TestCase):
                                       vat='2500',
                                       orderID='test1',
                                       productNumber='123',
-                                      description='This is a test. åâaä',
+                                      description=u'This is a test. åâaä',
                                       clientIPAddress='127.0.0.1',
                                       clientIdentifier='USERAGENT=test&username=testuser',
                                       additionalValues='PAYMENTMENU=TRUE',
@@ -58,44 +61,47 @@ class TestIntegration(unittest.TestCase):
                                       view='PX',
                                       cancelUrl='http://example.org/cancel'
                                      )
-
+        
         # Check the response
         self.assertEquals(type(response), XmlDictConfig)
         self.assertTrue('orderRef' in response)
         self.assertEquals(response['status']['errorCode'], 'OK')
         self.assertTrue(response['redirectUrl'].startswith('https://test-account.payex.com/MiscUI/PxMenu.aspx'))
-
+        
         # Complete the order (even if it's not completed by user)
         response = service.complete(orderRef=response['orderRef'])
-
+        
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'Order_OrderProcessing')
 
 class TestAgreements(unittest.TestCase):
-
+    """
+    Test the PxAgreement methods.
+    """
+    
     def testCreateAgreement3(self):
         # Needs credentials to test
         self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
-
+        
         service = Payex(merchant_number=MERCHANT_NUMBER,
                         encryption_key=ENCRYPTION_KEY,
                         production=False,
                        )
-
+        
         # Create an agreement
         response = service.create_agreement(merchantRef='oneclick',
                                  description='One-click shopping',
                                  purchaseOperation='AUTHORIZATION',
                                  maxAmount='100000',
                                 )
-
+        
         self.assertEquals(response['status']['description'], 'OK')
         self.assertTrue('agreementRef' in response)
         self.assertEquals(response['status']['errorCode'], 'OK')
         self.assertFalse('existingAgreementRef' in response)
-
+        
         agreement_ref = response['agreementRef']
-
+        
         response = service.initialize(purchaseOperation='AUTHORIZATION',
                                       price='5000',
                                       currency='NOK',
@@ -111,7 +117,7 @@ class TestAgreements(unittest.TestCase):
                                       agreementRef=agreement_ref,
                                       cancelUrl='http://example.org/cancel'
                                      )
-
+        
         self.assertEquals(response['status']['description'], 'OK')
         self.assertEquals(response['status']['errorCode'], 'OK')
         self.assertTrue('redirectUrl' in response)

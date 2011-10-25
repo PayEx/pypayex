@@ -1,6 +1,6 @@
 from suds.client import Client
-from payex.handlers import BaseHandler
 
+from payex.handlers import BaseHandler
 
 class PxOrderHandler(BaseHandler):
     """
@@ -19,7 +19,7 @@ class PxOrderHandler(BaseHandler):
         else:
             self._wdsl_url = 'https://test-external.payex.com/pxorder/pxorder.asmx?WSDL'
         
-        # Initialize the WDSL schema and set endpoint
+        # Initialize the client with the WDSL schema
         self._client = Client(self._wdsl_url)
 
 ###################
@@ -57,7 +57,7 @@ class PxOrderInitialize7Handler(PxOrderHandler):
         
         super(PxOrderInitialize7Handler, self).__call__(*args, **kwargs)
         
-        # Set SOAP endpoint and send request
+        # Set endpoint and send request
         self._endpoint = self._client.service.Initialize7
         
         return self._send_request()
@@ -77,7 +77,7 @@ class PxOrderCompleteHandler(PxOrderHandler):
         
         super(PxOrderCompleteHandler, self).__call__(*args, **kwargs)
         
-        # Set SOAP endpoint and send request
+        # Set endpoint and send request
         self._endpoint = self._client.service.Complete
         
         return self._send_request()
@@ -87,7 +87,7 @@ class PxOrderCapture4Handler(PxOrderHandler):
     Reference:
     http://www.payexpim.com/technical-reference/pxorder/capture4/
     """
-
+    
     field_order = [
         'accountNumer',
         'transactionNumber',
@@ -96,12 +96,12 @@ class PxOrderCapture4Handler(PxOrderHandler):
         'vatAmount',
         'additionalValues',
     ] 
-
+    
     def __call__(self, *args, **kwargs):
         
         super(PxOrderCapture4Handler, self).__call__(*args, **kwargs)
         
-        # Set SOAP endpoint and send request
+        # Set endpoint and send request
         self._endpoint = self._client.service.Capture4
         
         return self._send_request()

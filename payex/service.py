@@ -1,7 +1,5 @@
-from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler
-from payex.pxorder import PxOrderCapture4Handler
-from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler
-from payex.pxagreement import PxDeleteAgreementHandler, PxAgreementCheckHandler
+from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
+from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler
 
 
 class Payex(object):
@@ -21,7 +19,7 @@ class Payex(object):
         self.add_resource('delete_agreement', PxDeleteAgreementHandler)
         self.add_resource('check_agreement', PxAgreementCheckHandler)
         self.add_resource('autopay', PxAutoPay2Handler)
-
+        
         # Add order handlers
         self.add_resource('initialize', PxOrderInitialize7Handler)
         self.add_resource('complete', PxOrderCompleteHandler)
