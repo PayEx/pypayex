@@ -89,7 +89,7 @@ class PxOrderCapture4Handler(PxOrderHandler):
     """
     
     field_order = [
-        'accountNumer',
+        'accountNumber',
         'transactionNumber',
         'amount',
         'orderId',
