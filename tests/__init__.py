@@ -64,8 +64,9 @@ class TestOrders(unittest.TestCase):
         
         # Check the response
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertTrue('orderRef' in response)
+        self.assertEquals(response['status']['description'], 'OK')
         self.assertEquals(response['status']['errorCode'], 'OK')
+        self.assertTrue('orderRef' in response)
         self.assertTrue(response['redirectUrl'].startswith('https://test-account.payex.com/MiscUI/PxMenu.aspx'))
         
         # Complete the order (even if it's not completed by user)
@@ -96,8 +97,8 @@ class TestAgreements(unittest.TestCase):
                                 )
         
         self.assertEquals(response['status']['description'], 'OK')
-        self.assertTrue('agreementRef' in response)
         self.assertEquals(response['status']['errorCode'], 'OK')
+        self.assertTrue('agreementRef' in response)
         self.assertFalse('existingAgreementRef' in response)
         
         agreement_ref = response['agreementRef']
