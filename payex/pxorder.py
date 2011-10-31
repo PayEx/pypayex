@@ -105,3 +105,23 @@ class PxOrderCapture4Handler(PxOrderHandler):
         self._endpoint = self._client.service.Capture4
         
         return self._send_request()
+
+class PxOrderGetTransactionDetails2Handler(PxOrderHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxorder/gettransactiondetails2/
+    """
+
+    field_order = [
+        'accountNumber',
+        'transactionNumber'
+    ]
+
+    def __call__(self, *args, **kwargs):
+        
+        super(PxOrderGetTransactionDetails2Handler, self).__call__(*args, **kwargs)
+        
+        # Set endpoint and send request
+        self._endpoint = self._client.service.GetTransactionDetails2
+        
+        return self._send_request()
