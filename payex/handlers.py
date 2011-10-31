@@ -1,4 +1,9 @@
-from collections import OrderedDict
+
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+    
 from xml.etree import ElementTree
 import hashlib
 import logging
