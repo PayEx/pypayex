@@ -19,7 +19,7 @@ class PxAgreementHandler(BaseHandler):
         else:
             self._wdsl_url = 'https://test-external.payex.com/pxagreement/pxagreement.asmx?WSDL'
         
-        # Initialize the WDSL schema and set endpoint
+        # Initialize the client with the WDSL schema
         self._client = Client(self._wdsl_url)
 
 ###################

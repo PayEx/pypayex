@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-:
 import unittest
-
-from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler
+from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
+from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler
 from payex.service import Payex
 from payex.utils import XmlDictConfig
 
@@ -24,9 +24,17 @@ class TestService(unittest.TestCase):
         self.assertEquals(service.encryption_key, 'secret-string')
         self.assertFalse(service.production)
         
-        # Check that handlers are present
+        # Check that the order handlers are present
         self.assertTrue(isinstance(service.initialize, PxOrderInitialize7Handler))
         self.assertTrue(isinstance(service.complete, PxOrderCompleteHandler))
+        self.assertTrue(isinstance(service.capture, PxOrderCapture4Handler))
+        self.assertTrue(isinstance(service.get_transaction_details, PxOrderGetTransactionDetails2Handler))
+       
+        # Check that the agreement handlers are present
+        self.assertTrue(isinstance(service.create_agreement, PxCreateAgreement3Handler))
+        self.assertTrue(isinstance(service.delete_agreement, PxDeleteAgreementHandler))
+        self.assertTrue(isinstance(service.check_agreement, PxAgreementCheckHandler))
+        self.assertTrue(isinstance(service.autopay, PxAutoPay2Handler))
 
 class TestOrders(unittest.TestCase):
     """
