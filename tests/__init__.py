@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-:
 import unittest
+
 from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
 from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler
-from payex.service import Payex
+from payex.service import PayEx
 from payex.utils import XmlDictConfig
 
 # Insert your keys here to test integration
@@ -17,7 +18,7 @@ class TestService(unittest.TestCase):
 
     def testServiceSetup(self):
         
-        service = Payex(merchant_number='123', encryption_key='secret-string')
+        service = PayEx(merchant_number='123', encryption_key='secret-string')
         
         # Check default values and setting of kwargs
         self.assertEquals(service.accountNumber, '123')
@@ -49,7 +50,7 @@ class TestOrders(unittest.TestCase):
         # Needs credentials to test
         self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
         
-        service = Payex(merchant_number=MERCHANT_NUMBER,
+        service = PayEx(merchant_number=MERCHANT_NUMBER,
                         encryption_key=ENCRYPTION_KEY,
                         production=False
                        )
@@ -92,7 +93,7 @@ class TestAgreements(unittest.TestCase):
         # Needs credentials to test
         self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
         
-        service = Payex(merchant_number=MERCHANT_NUMBER,
+        service = PayEx(merchant_number=MERCHANT_NUMBER,
                         encryption_key=ENCRYPTION_KEY,
                         production=False,
                        )

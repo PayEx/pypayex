@@ -2,9 +2,9 @@ from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDe
 from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler
 
 
-class Payex(object):
+class PayEx(object):
     """
-    Base Payex service, with handlers.
+    Base PayEx service, with handlers.
     """
     
     def __init__(self, merchant_number, encryption_key, production=False):

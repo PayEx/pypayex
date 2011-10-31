@@ -15,9 +15,9 @@ Requires the `suds` SOAP library, and `ordereddict` on Python < 2.7.
 
 ## Usage
 
-	from payex.service import Payex
+	from payex.service import PayEx
 	
-	service = Payex(merchant_number='YOU_MERCHANT_NUMER', encryption_key='YOUR_ENCRYPTION_KEY', production=False)
+	service = PayEx(merchant_number='YOU_MERCHANT_NUMER', encryption_key='YOUR_ENCRYPTION_KEY', production=False)
 	
 	# Initialize payment
     response = service.initialize(purchaseOperation='SALE', price='5000', currency='NOK', vat='2500', orderID='test1', productNumber='123', description=u'This is a test.', clientIPAddress='127.0.0.1', clientIdentifier='USERAGENT=test&username=testuser', additionalValues='PAYMENTMENU=TRUE', returnUrl='http://example.org/return/', view='PX', cancelUrl='http://example.org/cancel/')
