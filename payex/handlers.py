@@ -7,10 +7,11 @@ except ImportError:
 from xml.etree import ElementTree
 import hashlib
 import logging
-from payex.utils import smart_str
+
 from suds import WebFault
 
-from payex.utils import XmlDictConfig, normalize_dictionary_values
+from payex.utils import XmlDictConfig, normalize_dictionary_values, smart_str
+
 logger = logging.getLogger(__name__)
 
 
@@ -32,9 +33,11 @@ class BaseHandler(object):
         # Include object variables that are in field_order
         for key, val in self.__dict__.iteritems():
             if key in self.field_order:
+                
+                # Turn into Unicode
                 if isinstance(val, str,):
-                    # turn into unicode
                     val = val.decode('utf8')
+                
                 params[key] = val
         
         # Set missing parameters as empty strings
