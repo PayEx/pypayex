@@ -1,26 +1,20 @@
-from suds.client import Client
-
 from payex.handlers import BaseHandler
 
 class PxOrderHandler(BaseHandler):
     """
     Base handler for PxOrder methods.
     """
-    
+
+    production_url = 'https://external.payex.com/pxorder/pxorder.asmx?WSDL'
+    testing_url = 'https://test-external.payex.com/pxorder/pxorder.asmx?WSDL'
+
     def __call__(self, *args, **kwargs):
         
         # Set the parameters on object
         for key, value in kwargs.iteritems():
             setattr(self, key, value)
-        
-        # Which WDSL URL to use
-        if self._service.production:
-            self._wdsl_url = 'https://external.payex.com/pxorder/pxorder.asmx?WSDL'
-        else:
-            self._wdsl_url = 'https://test-external.payex.com/pxorder/pxorder.asmx?WSDL'
-        
-        # Initialize the client with the WDSL schema
-        self._client = Client(self._wdsl_url)
+
+        self._client = self.client_factory()
 
 ###################
 # METHOD HANDLERS #
