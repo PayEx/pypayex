@@ -1,13 +1,12 @@
-import os
-
 try:
     from collections import OrderedDict
 except ImportError:
     from ordereddict import OrderedDict
-    
+
 from xml.etree import ElementTree
 import hashlib
 import logging
+import os
 
 from suds import WebFault, client
 
@@ -104,17 +103,21 @@ class BaseHandler(object):
             logger.error(resp)
         
         return self.response
-
+    
     def client_factory(self):
+        """
+        Custom client factory to set proxy options.
+        """
+        
         if self._service.production:
             url = self.production_url
         else:
             url = self.testing_url
-
+        
         proxy_options = dict()
         if os.environ.get('https_proxy'):
             proxy_options['https'] = os.environ['https_proxy']
         if os.environ.get('http_proxy'):
             proxy_options['http'] = os.environ['http_proxy']
-
+        
         return client.Client(url, proxy=proxy_options)

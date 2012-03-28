@@ -4,15 +4,15 @@ class PxAgreementHandler(BaseHandler):
     """
     Base handler for PxAgreement methods.
     """
-
+    
     production_url = 'https://external.payex.com/pxagreement/pxagreement.asmx?WSDL'
     testing_url = 'https://test-external.payex.com/pxagreement/pxagreement.asmx?WSDL'
-
+    
     def __call__(self, *args, **kwargs):
         # Set the parameters on object
         for key, value in kwargs.iteritems():
             setattr(self, key, value)
-
+        
         self._client = self.client_factory()
 
 ###################
@@ -24,7 +24,7 @@ class PxCreateAgreement3Handler(PxAgreementHandler):
     Reference:
     http://www.payexpim.com/technical-reference/pxagreement/createagreement3/
     """
-
+    
     field_order = [
         'accountNumber',
         'merchantRef',
@@ -90,7 +90,7 @@ class PxAutoPay2Handler(PxAgreementHandler):
     Reference:
     http://www.payexpim.com/technical-reference/pxagreement/autopay2/
     """
-
+    
     field_order = [
         'accountNumber',
         'agreementRef',
