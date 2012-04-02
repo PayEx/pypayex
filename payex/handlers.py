@@ -93,7 +93,7 @@ class BaseHandler(object):
             logger.exception(e)
         
         # Convert XML response into a dictionary
-        self.response = XmlDictConfig(ElementTree.XML(resp))
+        self.response = XmlDictConfig(ElementTree.XML(smart_str(resp)))
         
         # Normalize dictionary values
         self.response = normalize_dictionary_values(self.response)
