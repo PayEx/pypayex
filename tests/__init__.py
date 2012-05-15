@@ -44,32 +44,34 @@ class TestOrders(unittest.TestCase):
     
     def testPayment(self):
         """
-        Test the initialize7 and complete method.
+        Test the initialize7 and complete methods.
         """
         
         # Needs credentials to test
         self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
         
-        service = PayEx(merchant_number=MERCHANT_NUMBER,
-                        encryption_key=ENCRYPTION_KEY,
-                        production=False
-                       )
+        service = PayEx(
+            merchant_number=MERCHANT_NUMBER, 
+            encryption_key=ENCRYPTION_KEY, 
+            production=False
+        )
         
         # Initialize a payment
-        response = service.initialize(purchaseOperation='AUTHORIZATION',
-                                      price='5000',
-                                      currency='NOK',
-                                      vat='2500',
-                                      orderID='test1',
-                                      productNumber='123',
-                                      description=u'This is a test. åâaä',
-                                      clientIPAddress='127.0.0.1',
-                                      clientIdentifier='USERAGENT=test&username=testuser',
-                                      additionalValues='PAYMENTMENU=TRUE',
-                                      returnUrl='http://example.org/return',
-                                      view='PX',
-                                      cancelUrl='http://example.org/cancel'
-                                     )
+        response = service.initialize(
+            purchaseOperation='AUTHORIZATION',
+            price='5000',
+            currency='NOK',
+            vat='2500',
+            orderID='test1',
+            productNumber='123',
+            description=u'This is a test. åâaä',
+            clientIPAddress='127.0.0.1',
+            clientIdentifier='USERAGENT=test&username=testuser',
+            additionalValues='PAYMENTMENU=TRUE',
+            returnUrl='http://example.org/return',
+            view='PX',
+            cancelUrl='http://example.org/cancel'
+        )
         
         # Check the response
         self.assertEquals(type(response), XmlDictConfig)
@@ -78,11 +80,11 @@ class TestOrders(unittest.TestCase):
         self.assertTrue('orderRef' in response)
         self.assertTrue(response['redirectUrl'].startswith('https://test-account.payex.com/MiscUI/PxMenu.aspx'))
         
-        # Complete the order (even if it's not completed by user)
+        # Try to complete the order (even if it's not started by user)
         response = service.complete(orderRef=response['orderRef'])
         
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertEquals(response['status']['errorCode'], 'Order_OrderProcessing')
+        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
 
 class TestAgreements(unittest.TestCase):
     """
@@ -90,20 +92,26 @@ class TestAgreements(unittest.TestCase):
     """
     
     def testCreateAgreement3(self):
+        """
+        Test the createagreement and initialize methods.
+        """
+        
         # Needs credentials to test
         self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
         
-        service = PayEx(merchant_number=MERCHANT_NUMBER,
-                        encryption_key=ENCRYPTION_KEY,
-                        production=False,
-                       )
+        service = PayEx(
+            merchant_number=MERCHANT_NUMBER, 
+            encryption_key=ENCRYPTION_KEY, 
+            production=False
+        )
         
         # Create an agreement
-        response = service.create_agreement(merchantRef='oneclick',
-                                 description='One-click shopping',
-                                 purchaseOperation='AUTHORIZATION',
-                                 maxAmount='100000',
-                                )
+        response = service.create_agreement(
+            merchantRef='oneclick',
+            description=u'One-click shopping æøåÆØÅ',
+            purchaseOperation='AUTHORIZATION',
+            maxAmount='100000',
+        )
         
         self.assertEquals(response['status']['description'], 'OK')
         self.assertEquals(response['status']['errorCode'], 'OK')
@@ -112,26 +120,34 @@ class TestAgreements(unittest.TestCase):
         
         agreement_ref = response['agreementRef']
         
-        response = service.initialize(purchaseOperation='AUTHORIZATION',
-                                      price='5000',
-                                      currency='NOK',
-                                      vat='2500',
-                                      orderID='test2',
-                                      productNumber='123',
-                                      description=u'This is a test with øæå.',
-                                      clientIPAddress='127.0.0.1',
-                                      clientIdentifier='USERAGENT=test&username=testuser',
-                                      additionalValues='PAYMENTMENU=TRUE',
-                                      returnUrl='http://example.org/return',
-                                      view='PX',
-                                      agreementRef=agreement_ref,
-                                      cancelUrl='http://example.org/cancel'
-                                     )
+        response = service.initialize(
+            purchaseOperation='AUTHORIZATION',
+            price='5000',
+            currency='NOK',
+            vat='2500',
+            orderID='test2',
+            productNumber='123',
+            description=u'This is a test with øæå.',
+            clientIPAddress='127.0.0.1',
+            clientIdentifier='USERAGENT=test&username=testuser',
+            additionalValues='PAYMENTMENU=TRUE',
+            returnUrl='http://example.org/return',
+            view='PX',
+            agreementRef=agreement_ref,
+            cancelUrl='http://example.org/cancel'
+        )
         
         self.assertEquals(response['status']['description'], 'OK')
         self.assertEquals(response['status']['errorCode'], 'OK')
         self.assertTrue('redirectUrl' in response)
         self.assertTrue(response['orderRef'] in response['redirectUrl'])
+        
+        # Try to complete the order (even if it's not started by user)
+        response = service.complete(orderRef=response['orderRef'])
+        
+        self.assertEquals(type(response), XmlDictConfig)
+        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+
 
 if __name__ == "__main__":
     unittest.main()
