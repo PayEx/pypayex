@@ -25,7 +25,7 @@ class PayEx(object):
         self.add_resource('complete', PxOrderCompleteHandler)
         self.add_resource('capture', PxOrderCapture4Handler)
         self.add_resource('get_transaction_details', PxOrderGetTransactionDetails2Handler)
-        self.add_resource('cancel2', PxCancel2Handler)
+        self.add_resource('cancel', PxCancel2Handler)
     
     def add_resource(self, name, handler):
         """

@@ -63,8 +63,8 @@ class PxOrderCompleteHandler(PxOrderHandler):
     """
     
     field_order = [
-        'accountNumber', 
-        'orderRef', 
+        'accountNumber',
+        'orderRef',
     ]
     
     def __call__(self, *args, **kwargs):
@@ -120,18 +120,17 @@ class PxOrderGetTransactionDetails2Handler(PxOrderHandler):
         
         return self._send_request()
 
-
 class PxCancel2Handler(PxOrderHandler):
     """
     Reference:
     http://www.payexpim.com/technical-reference/pxorder/cancel2/
     """
-
+    
     field_order = [
         'accountNumber',
         'transactionNumber'
     ]
-
+    
     def __call__(self, *args, **kwargs):
         
         super(PxCancel2Handler, self).__call__(*args, **kwargs)
