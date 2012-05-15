@@ -81,7 +81,7 @@ class PxAgreementCheckHandler(PxAgreementHandler):
         super(PxAgreementCheckHandler, self).__call__(*args, **kwargs)
         
         # Set endpoint and send request
-        self._endpoint = self._client.service.AgreementCheck
+        self._endpoint = self._client.service.Check
         
         return self._send_request()
 

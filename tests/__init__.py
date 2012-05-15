@@ -2,7 +2,7 @@
 import unittest
 
 from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
-from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler
+from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler, PxCancel2Handler
 from payex.service import PayEx
 from payex.utils import XmlDictConfig
 
@@ -30,6 +30,7 @@ class TestService(unittest.TestCase):
         self.assertTrue(isinstance(service.complete, PxOrderCompleteHandler))
         self.assertTrue(isinstance(service.capture, PxOrderCapture4Handler))
         self.assertTrue(isinstance(service.get_transaction_details, PxOrderGetTransactionDetails2Handler))
+        self.assertTrue(isinstance(service.cancel, PxCancel2Handler))
        
         # Check that the agreement handlers are present
         self.assertTrue(isinstance(service.create_agreement, PxCreateAgreement3Handler))
@@ -85,15 +86,38 @@ class TestOrders(unittest.TestCase):
         
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        
+        # Get the transaction details
+        response = service.get_transaction_details(transactionNumber='0')
+        
+        self.assertEquals(type(response), XmlDictConfig)
+        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        
+        # Try to capture a transaction
+        response = service.capture(
+            transactionNumber='0',
+            amount='1000',
+            vatAmount='250'
+        )
+        
+        self.assertEquals(type(response), XmlDictConfig)
+        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        
+        # Try to cancel a transaction
+        response = service.cancel(transactionNumber='1')
+        
+        self.assertEquals(type(response), XmlDictConfig)
+        self.assertEquals(response['status']['errorCode'], 'Error_Generic')
+
 
 class TestAgreements(unittest.TestCase):
     """
     Test the PxAgreement methods.
     """
     
-    def testCreateAgreement3(self):
+    def testAgreementHandlers(self):
         """
-        Test the createagreement and initialize methods.
+        Test the various agreement handlers.
         """
         
         # Needs credentials to test
@@ -120,6 +144,7 @@ class TestAgreements(unittest.TestCase):
         
         agreement_ref = response['agreementRef']
         
+        # Initialize the payment
         response = service.initialize(
             purchaseOperation='AUTHORIZATION',
             price='5000',
@@ -147,6 +172,31 @@ class TestAgreements(unittest.TestCase):
         
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        
+        # AutoPay with the agreement
+        response = service.autopay(
+            purchaseOperation='SALE',
+            agreementRef=agreement_ref,
+            price='1000',
+            productNumber='123',
+            description=u'This is a test with øæå.',
+            orderId='900'
+        )
+        
+        self.assertEquals(response['status']['errorCode'], 'AgreementNotVerified')
+        
+        # Check the agreement
+        response = service.check_agreement(agreementRef=agreement_ref)
+        
+        self.assertEquals(response['status']['description'], 'OK')
+        self.assertEquals(response['status']['errorCode'], 'OK')
+        self.assertEquals(response['agreementStatus'], '0')
+        
+        # Delete the agreement
+        response = service.delete_agreement(agreementRef=agreement_ref)
+        
+        self.assertEquals(response['status']['description'], 'OK')
+        self.assertEquals(response['status']['errorCode'], 'OK')
 
 
 if __name__ == "__main__":
