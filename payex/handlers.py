@@ -90,7 +90,8 @@ class BaseHandler(object):
             resp = self._endpoint(**params)
             logger.debug(resp)
         except WebFault, e:
-            logger.exception(e)
+            logger.exception('An error occurred while making the SOAP request.')
+            return None
         
         # Convert XML response into a dictionary
         self.response = XmlDictConfig(ElementTree.XML(smart_str(resp)))
