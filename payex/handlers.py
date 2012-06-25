@@ -55,7 +55,7 @@ class BaseHandler(object):
         params = OrderedDict(sorted(params.items(), key=order_keys))
         
         # Add hash to dictionary if present
-        if hasattr(self, 'hash'):
+        if hasattr(self, 'hash') and self.hash is not None:
             params['hash'] = self.hash
         
         return params
@@ -65,6 +65,7 @@ class BaseHandler(object):
         Generates a hash based on the specific fields for the method.
         """
         
+        self.hash = None
         str_hash = ''
         
         for key, val in self._get_params().iteritems():

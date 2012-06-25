@@ -37,6 +37,41 @@ class TestService(unittest.TestCase):
         self.assertTrue(isinstance(service.delete_agreement, PxDeleteAgreementHandler))
         self.assertTrue(isinstance(service.check_agreement, PxAgreementCheckHandler))
         self.assertTrue(isinstance(service.autopay, PxAutoPay2Handler))
+    
+    def testStatelessness(self):
+        """
+        Test for an earlier bug, did not reset hash for new requests.
+        """
+        
+        # Needs credentials to test
+        self.assertTrue(all([MERCHANT_NUMBER, ENCRYPTION_KEY]))
+        
+        service = PayEx(
+            merchant_number=MERCHANT_NUMBER, 
+            encryption_key=ENCRYPTION_KEY, 
+            production=False
+        )
+        
+        # Create an agreement
+        response = service.create_agreement(
+            merchantRef='oneclick',
+            description=u'One-click shopping æøåÆØÅ',
+            purchaseOperation='SALE',
+            maxAmount='100000',
+        )
+        
+        # Create another agreement
+        response = service.create_agreement(
+            merchantRef='oneclick',
+            description=u'One-click shopping æøåÆØÅ',
+            purchaseOperation='SALE',
+            maxAmount='100000',
+        )
+        
+        # Ensure that the response is still valid
+        self.assertEquals(response['status']['description'], 'OK')
+        self.assertEquals(response['status']['errorCode'], 'OK')
+        self.assertTrue('agreementRef' in response)
 
 class TestOrders(unittest.TestCase):
     """
