@@ -139,3 +139,48 @@ class PxCancel2Handler(PxOrderHandler):
         self._endpoint = self._client.service.Cancel2
         
         return self._send_request()
+
+class PxCredit5Handler(PxOrderHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxorder/credit5/
+    """
+
+    field_order = [
+        'accountNumber',
+        'transactionNumber',
+        'amount',
+        'orderId',
+        'vatAmount',
+        'additionalValues'
+    ]
+
+    def __call__(self, *args, **kwargs):
+
+        super(PxCredit5Handler, self).__call__(*args, **kwargs)
+
+        # Set endpoint and send request
+        self._endpoint = self._client.service.Credit5
+
+        return self._send_request()
+
+
+class PxCheck2Handler(PxOrderHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxorder/credit5/
+    """
+
+    field_order = [
+        'accountNumber',
+        'transactionNumber'
+    ]
+
+    def __call__(self, *args, **kwargs):
+
+        super(PxCheck2Handler, self).__call__(*args, **kwargs)
+
+        # Set endpoint and send request
+        self._endpoint = self._client.service.Check2
+
+        return self._send_request()
