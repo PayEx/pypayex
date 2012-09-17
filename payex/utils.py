@@ -28,8 +28,10 @@ def normalize_dictionary_values(dictionary):
     """
     
     for key, val in dictionary.iteritems():
-        if isinstance(val, XmlDictConfig):
+        if isinstance(val, dict):
             dictionary[key] = normalize_dictionary_values(val)
+        elif isinstance(val, list):
+            dictionary[key] = list(val)
         else:
             dictionary[key] = normalize_value(val)
     
