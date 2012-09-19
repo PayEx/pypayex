@@ -168,7 +168,7 @@ class PxCredit5Handler(PxOrderHandler):
 class PxCheck2Handler(PxOrderHandler):
     """
     Reference:
-    http://www.payexpim.com/technical-reference/pxorder/credit5/
+    http://www.payexpim.com/technical-reference/pxorder/check2/
     """
 
     field_order = [

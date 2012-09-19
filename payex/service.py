@@ -1,5 +1,5 @@
-from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
-from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler, PxCancel2Handler, PxCredit5Handler, PxCheck2Handler
+from payex import pxagreement
+from payex import pxorder
 
 
 class PayEx(object):
@@ -15,19 +15,19 @@ class PayEx(object):
         self.production = production
         
         # Add agreement handlers
-        self.add_resource('create_agreement', PxCreateAgreement3Handler)
-        self.add_resource('delete_agreement', PxDeleteAgreementHandler)
-        self.add_resource('check_agreement', PxAgreementCheckHandler)
-        self.add_resource('autopay', PxAutoPay2Handler)
+        self.add_resource('create_agreement', pxagreement.PxCreateAgreement3Handler)
+        self.add_resource('delete_agreement', pxagreement.PxDeleteAgreementHandler)
+        self.add_resource('check_agreement', pxagreement.PxAgreementCheckHandler)
+        self.add_resource('autopay', pxagreement.PxAutoPay2Handler)
         
         # Add order handlers
-        self.add_resource('initialize', PxOrderInitialize7Handler)
-        self.add_resource('complete', PxOrderCompleteHandler)
-        self.add_resource('capture', PxOrderCapture4Handler)
-        self.add_resource('get_transaction_details', PxOrderGetTransactionDetails2Handler)
-        self.add_resource('cancel', PxCancel2Handler)
-        self.add_resource('credit', PxCredit5Handler)
-        self.add_resource('check', PxCheck2Handler)
+        self.add_resource('initialize', pxorder.PxOrderInitialize7Handler)
+        self.add_resource('complete', pxorder.PxOrderCompleteHandler)
+        self.add_resource('capture', pxorder.PxOrderCapture4Handler)
+        self.add_resource('get_transaction_details', pxorder.PxOrderGetTransactionDetails2Handler)
+        self.add_resource('cancel', pxorder.PxCancel2Handler)
+        self.add_resource('credit', pxorder.PxCredit5Handler)
+        self.add_resource('check', pxorder.PxCheck2Handler)
     
     def add_resource(self, name, handler):
         """
