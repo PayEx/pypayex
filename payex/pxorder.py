@@ -20,7 +20,7 @@ class PxOrderHandler(BaseHandler):
 # METHOD HANDLERS #
 ###################
 
-class PxOrderInitialize7Handler(PxOrderHandler):
+class PxOrderInitialize8Handler(PxOrderHandler):
     """
     Reference:
     http://www.payexpim.com/technical-reference/pxorder/initialize7/
@@ -41,7 +41,7 @@ class PxOrderInitialize7Handler(PxOrderHandler):
         'additionalValues', 
         'externalID', 
         'returnUrl', 
-        'view', 
+        'view',
         'agreementRef', 
         'cancelUrl', 
         'clientLanguage',
@@ -49,10 +49,10 @@ class PxOrderInitialize7Handler(PxOrderHandler):
     
     def __call__(self, *args, **kwargs):
         
-        super(PxOrderInitialize7Handler, self).__call__(*args, **kwargs)
+        super(PxOrderInitialize8Handler, self).__call__(*args, **kwargs)
         
         # Set endpoint and send request
-        self._endpoint = self._client.service.Initialize7
+        self._endpoint = self._client.service.Initialize8
         
         return self._send_request()
 

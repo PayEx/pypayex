@@ -21,7 +21,7 @@ class PayEx(object):
         self.add_resource('autopay', pxagreement.PxAutoPay2Handler)
         
         # Add order handlers
-        self.add_resource('initialize', pxorder.PxOrderInitialize7Handler)
+        self.add_resource('initialize', pxorder.PxOrderInitialize8Handler)
         self.add_resource('complete', pxorder.PxOrderCompleteHandler)
         self.add_resource('capture', pxorder.PxOrderCapture4Handler)
         self.add_resource('get_transaction_details', pxorder.PxOrderGetTransactionDetails2Handler)

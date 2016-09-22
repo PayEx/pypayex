@@ -2,7 +2,7 @@
 import unittest
 
 from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
-from payex.pxorder import PxOrderInitialize7Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler, PxCancel2Handler
+from payex.pxorder import PxOrderInitialize8Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler, PxCancel2Handler
 from payex.service import PayEx
 from payex.utils import XmlDictConfig
 
@@ -26,7 +26,7 @@ class TestService(unittest.TestCase):
         self.assertFalse(service.production)
         
         # Check that the order handlers are present
-        self.assertTrue(isinstance(service.initialize, PxOrderInitialize7Handler))
+        self.assertTrue(isinstance(service.initialize, PxOrderInitialize8Handler))
         self.assertTrue(isinstance(service.complete, PxOrderCompleteHandler))
         self.assertTrue(isinstance(service.capture, PxOrderCapture4Handler))
         self.assertTrue(isinstance(service.get_transaction_details, PxOrderGetTransactionDetails2Handler))
