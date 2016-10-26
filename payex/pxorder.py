@@ -23,7 +23,7 @@ class PxOrderHandler(BaseHandler):
 class PxOrderInitialize8Handler(PxOrderHandler):
     """
     Reference:
-    http://www.payexpim.com/technical-reference/pxorder/initialize7/
+    http://www.payexpim.com/technical-reference/pxorder/initialize8/
     """
     
     field_order = [
@@ -55,6 +55,38 @@ class PxOrderInitialize8Handler(PxOrderHandler):
         self._endpoint = self._client.service.Initialize8
         
         return self._send_request()
+
+
+class PxAddSingleOrderLine2Handler(PxOrderHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxorder/addsingleorderline2/
+    """
+    
+    field_order = [
+        'accountNumber', 
+        'orderRef', 
+        'itemNumber', 
+        'itemDescription1', 
+        'itemDescription2', 
+        'itemDescription3', 
+        'itemDescription4', 
+        'itemDescription5', 
+        'quantity', 
+        'amount', 
+        'vatPrice', 
+        'vatPercent',
+    ]
+    
+    def __call__(self, *args, **kwargs):
+        
+        super(PxAddSingleOrderLine2Handler, self).__call__(*args, **kwargs)
+        
+        # Set endpoint and send request
+        self._endpoint = self._client.service.AddSingleOrderLine2
+        
+        return self._send_request()
+
 
 class PxOrderCompleteHandler(PxOrderHandler):
     """
