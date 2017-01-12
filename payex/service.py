@@ -29,6 +29,7 @@ class PayEx(object):
         self.add_resource('credit', pxorder.PxCredit5Handler)
         self.add_resource('check', pxorder.PxCheck2Handler)
         self.add_resource('add_single_order_line', pxorder.PxAddSingleOrderLine2Handler)
+        self.add_resource('purchase_invoice_corporate', pxorder.PxPurchaseInvoiceCorporateHandler)
     
     def add_resource(self, name, handler):
         """
