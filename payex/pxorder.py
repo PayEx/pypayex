@@ -197,6 +197,45 @@ class PxCredit5Handler(PxOrderHandler):
         return self._send_request()
 
 
+class PxPurchaseInvoiceCorporateHandler(PxOrderHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxorder/purchaseinvoicecorporate/
+    """
+
+    field_order = [
+        'accountNumber',
+        'orderRef',
+        'companyRef',
+        'companyName',
+        'streetAddress',
+        'coAddress',
+        'postalCode',
+        'city',
+        'country',
+        'organizationNumber',
+        'phoneNumber',
+        'email',
+        'productCode',
+        'creditcheckRef',
+        'mediaDistribution',
+        'invoiceText',
+        'invoiceDate',
+        'invoiceDueDays',
+        'invoiceNumber',
+        'invoiceLayout',
+    ]
+
+    def __call__(self, *args, **kwargs):
+
+        super(PxPurchaseInvoiceCorporateHandler, self).__call__(*args, **kwargs)
+
+        # Set endpoint and send request
+        self._endpoint = self._client.service.PurchaseInvoiceCorporate
+
+        return self._send_request()
+
+
 class PxCheck2Handler(PxOrderHandler):
     """
     Reference:
