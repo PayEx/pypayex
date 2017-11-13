@@ -20,10 +20,10 @@ class PxOrderHandler(BaseHandler):
 # METHOD HANDLERS #
 ###################
 
-class PxOrderInitialize7Handler(PxOrderHandler):
+class PxOrderInitialize8Handler(PxOrderHandler):
     """
     Reference:
-    http://www.payexpim.com/technical-reference/pxorder/initialize7/
+    http://www.payexpim.com/technical-reference/pxorder/initialize8/
     """
     
     field_order = [
@@ -41,7 +41,7 @@ class PxOrderInitialize7Handler(PxOrderHandler):
         'additionalValues', 
         'externalID', 
         'returnUrl', 
-        'view', 
+        'view',
         'agreementRef', 
         'cancelUrl', 
         'clientLanguage',
@@ -49,12 +49,44 @@ class PxOrderInitialize7Handler(PxOrderHandler):
     
     def __call__(self, *args, **kwargs):
         
-        super(PxOrderInitialize7Handler, self).__call__(*args, **kwargs)
+        super(PxOrderInitialize8Handler, self).__call__(*args, **kwargs)
         
         # Set endpoint and send request
-        self._endpoint = self._client.service.Initialize7
+        self._endpoint = self._client.service.Initialize8
         
         return self._send_request()
+
+
+class PxAddSingleOrderLine2Handler(PxOrderHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxorder/addsingleorderline2/
+    """
+    
+    field_order = [
+        'accountNumber', 
+        'orderRef', 
+        'itemNumber', 
+        'itemDescription1', 
+        'itemDescription2', 
+        'itemDescription3', 
+        'itemDescription4', 
+        'itemDescription5', 
+        'quantity', 
+        'amount', 
+        'vatPrice', 
+        'vatPercent',
+    ]
+    
+    def __call__(self, *args, **kwargs):
+        
+        super(PxAddSingleOrderLine2Handler, self).__call__(*args, **kwargs)
+        
+        # Set endpoint and send request
+        self._endpoint = self._client.service.AddSingleOrderLine2
+        
+        return self._send_request()
+
 
 class PxOrderCompleteHandler(PxOrderHandler):
     """
@@ -161,6 +193,45 @@ class PxCredit5Handler(PxOrderHandler):
 
         # Set endpoint and send request
         self._endpoint = self._client.service.Credit5
+
+        return self._send_request()
+
+
+class PxPurchaseInvoiceCorporateHandler(PxOrderHandler):
+    """
+    Reference:
+    http://www.payexpim.com/technical-reference/pxorder/purchaseinvoicecorporate/
+    """
+
+    field_order = [
+        'accountNumber',
+        'orderRef',
+        'companyRef',
+        'companyName',
+        'streetAddress',
+        'coAddress',
+        'postalCode',
+        'city',
+        'country',
+        'organizationNumber',
+        'phoneNumber',
+        'email',
+        'productCode',
+        'creditcheckRef',
+        'mediaDistribution',
+        'invoiceText',
+        'invoiceDate',
+        'invoiceDueDays',
+        'invoiceNumber',
+        'invoiceLayout',
+    ]
+
+    def __call__(self, *args, **kwargs):
+
+        super(PxPurchaseInvoiceCorporateHandler, self).__call__(*args, **kwargs)
+
+        # Set endpoint and send request
+        self._endpoint = self._client.service.PurchaseInvoiceCorporate
 
         return self._send_request()
 

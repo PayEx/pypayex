@@ -117,9 +117,12 @@ class BaseHandler(object):
             url = self.testing_url
         
         proxy_options = dict()
-        if os.environ.get('https_proxy'):
-            proxy_options['https'] = os.environ['https_proxy']
-        if os.environ.get('http_proxy'):
-            proxy_options['http'] = os.environ['http_proxy']
+        https_proxy_setting = os.environ.get('PAYEX_HTTPS_PROXY') or os.environ.get('https_proxy')
+        http_proxy_setting = os.environ.get('PAYEX_HTTP_PROXY') or os.environ.get('http_proxy')
+        
+        if https_proxy_setting:
+            proxy_options['https'] = https_proxy_setting
+        if http_proxy_setting:
+            proxy_options['http'] = http_proxy_setting
         
         return client.Client(url, proxy=proxy_options)
