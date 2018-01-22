@@ -6,7 +6,7 @@ class PxOrderHandler(BaseHandler):
     """
 
     production_url = 'https://external.payex.com/pxorder/pxorder.asmx?WSDL'
-    testing_url = 'https://test-external.payex.com/pxorder/pxorder.asmx?WSDL'
+    testing_url = 'https://external.externaltest.payex.com/pxorder/pxorder.asmx?WSDL'
 
     def __call__(self, *args, **kwargs):
         
