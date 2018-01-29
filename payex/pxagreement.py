@@ -6,7 +6,7 @@ class PxAgreementHandler(BaseHandler):
     """
     
     production_url = 'https://external.payex.com/pxagreement/pxagreement.asmx?WSDL'
-    testing_url = 'https://test-external.payex.com/pxagreement/pxagreement.asmx?WSDL'
+    testing_url = 'https://external.externaltest.payex.com/pxagreement/pxagreement.asmx?WSDL'
     
     def __call__(self, *args, **kwargs):
         # Set the parameters on object
