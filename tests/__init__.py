@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-:
 import unittest
+import os
 
 from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
 from payex.pxorder import PxOrderInitialize8Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler, PxCancel2Handler
@@ -7,8 +8,8 @@ from payex.service import PayEx
 from payex.utils import XmlDictConfig
 
 # Insert your keys here to test integration
-MERCHANT_NUMBER = ''
-ENCRYPTION_KEY = ''
+MERCHANT_NUMBER = os.environ['MERCHANT_NUMBER']
+ENCRYPTION_KEY = os.environ['ENCRYPTION_KEY']
 
 
 class TestService(unittest.TestCase):
