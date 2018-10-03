@@ -1,2 +1,2 @@
-suds
+suds; python_version <= '2.7'
 ordereddict
