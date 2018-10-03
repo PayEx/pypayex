@@ -1,3 +1,4 @@
 dist/
 pypayex.egg-info/
 suds-0.4-py2.7.egg
+.vscode
