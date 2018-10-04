@@ -127,8 +127,6 @@ class TestOrders(unittest.TestCase):
         # Get the transaction details
         response = service.get_transaction_details(transactionNumber='0')
 
-        print(response)
-        
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
         
@@ -209,8 +207,6 @@ class TestAgreements(unittest.TestCase):
         # Try to complete the order (even if it's not started by user)
         response = service.complete(orderRef=response['orderRef'])
         
-        print(response)
-
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'Order_OrderProcessing')
         
