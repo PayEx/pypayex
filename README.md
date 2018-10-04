@@ -1,6 +1,6 @@
 # pypayex
 
-pypayex is a Python module for interacting with the PayEx Soap API.
+pypayex is a Python module for interacting with the PayEx SOAP API.
 
 The PayEx implementation manual is available here:
 http://www.payexpim.com/
