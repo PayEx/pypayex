@@ -4,6 +4,8 @@
 
 Added Travis deployment.
 
+* #6, #7: Updated URLs to the test environment
+
 ## 0.4.6 (2017-11-13)
 Fixes and additions from https://github.com/edqu-ab.
 
