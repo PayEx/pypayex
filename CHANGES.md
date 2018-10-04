@@ -1,5 +1,8 @@
 # pypayex Changelog
 
+## 0.4.7 (2018-10-04)
+
+Added Travis deployment.
 
 ## 0.4.6 (2017-11-13)
 Fixes and additions from https://github.com/edqu-ab.
