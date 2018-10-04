@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-:
 import unittest
+import os
 
 from payex.pxagreement import PxCreateAgreement3Handler, PxAutoPay2Handler, PxDeleteAgreementHandler, PxAgreementCheckHandler
 from payex.pxorder import PxOrderInitialize8Handler, PxOrderCompleteHandler, PxOrderCapture4Handler, PxOrderGetTransactionDetails2Handler, PxCancel2Handler
@@ -7,8 +8,8 @@ from payex.service import PayEx
 from payex.utils import XmlDictConfig
 
 # Insert your keys here to test integration
-MERCHANT_NUMBER = ''
-ENCRYPTION_KEY = ''
+MERCHANT_NUMBER = os.environ['MERCHANT_NUMBER']
+ENCRYPTION_KEY = os.environ['ENCRYPTION_KEY']
 
 
 class TestService(unittest.TestCase):
@@ -114,17 +115,18 @@ class TestOrders(unittest.TestCase):
         self.assertEquals(response['status']['description'], 'OK')
         self.assertEquals(response['status']['errorCode'], 'OK')
         self.assertTrue('orderRef' in response)
-        self.assertTrue(response['redirectUrl'].startswith('https://test-account.payex.com/MiscUI/PxMenu.aspx'))
+
+        self.assertTrue(response['redirectUrl'].startswith('https://account.externaltest.payex.com/MiscUI/PxMenu.aspx'))
         
         # Try to complete the order (even if it's not started by user)
         response = service.complete(orderRef=response['orderRef'])
         
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        self.assertEquals(response['status']['errorCode'], 'Order_OrderProcessing')
         
         # Get the transaction details
         response = service.get_transaction_details(transactionNumber='0')
-        
+
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
         
@@ -142,7 +144,7 @@ class TestOrders(unittest.TestCase):
         response = service.cancel(transactionNumber='1')
         
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertEquals(response['status']['errorCode'], 'Error_Generic')
+        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
 
 
 class TestAgreements(unittest.TestCase):
@@ -206,7 +208,7 @@ class TestAgreements(unittest.TestCase):
         response = service.complete(orderRef=response['orderRef'])
         
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        self.assertEquals(response['status']['errorCode'], 'Order_OrderProcessing')
         
         # AutoPay with the agreement
         response = service.autopay(
