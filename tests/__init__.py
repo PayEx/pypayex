@@ -146,7 +146,7 @@ class TestOrders(unittest.TestCase):
         response = service.cancel(transactionNumber='1')
         
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertEquals(response['status']['errorCode'], 'Error_Generic')
+        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
 
 
 class TestAgreements(unittest.TestCase):
