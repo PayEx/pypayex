@@ -116,9 +116,6 @@ class TestOrders(unittest.TestCase):
         self.assertEquals(response['status']['errorCode'], 'OK')
         self.assertTrue('orderRef' in response)
 
-        print(response)
-        print(response['redirectUrl'])
-
         self.assertTrue(response['redirectUrl'].startswith('https://account.externaltest.payex.com/MiscUI/PxMenu.aspx'))
         
         # Try to complete the order (even if it's not started by user)
@@ -129,6 +126,8 @@ class TestOrders(unittest.TestCase):
         
         # Get the transaction details
         response = service.get_transaction_details(transactionNumber='0')
+
+        print(response)
         
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
@@ -210,6 +209,8 @@ class TestAgreements(unittest.TestCase):
         # Try to complete the order (even if it's not started by user)
         response = service.complete(orderRef=response['orderRef'])
         
+        print(response)
+
         self.assertEquals(type(response), XmlDictConfig)
         self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
         
