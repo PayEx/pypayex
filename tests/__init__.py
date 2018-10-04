@@ -122,7 +122,7 @@ class TestOrders(unittest.TestCase):
         response = service.complete(orderRef=response['orderRef'])
         
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        self.assertEquals(response['status']['errorCode'], 'Order_OrderProcessing')
         
         # Get the transaction details
         response = service.get_transaction_details(transactionNumber='0')
@@ -212,7 +212,7 @@ class TestAgreements(unittest.TestCase):
         print(response)
 
         self.assertEquals(type(response), XmlDictConfig)
-        self.assertEquals(response['status']['errorCode'], 'NoRecordFound')
+        self.assertEquals(response['status']['errorCode'], 'Order_OrderProcessing')
         
         # AutoPay with the agreement
         response = service.autopay(
