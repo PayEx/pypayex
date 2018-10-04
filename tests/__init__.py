@@ -119,7 +119,7 @@ class TestOrders(unittest.TestCase):
         print(response)
         print(response['redirectUrl'])
 
-        self.assertTrue(response['redirectUrl'].startswith('https://test-account.payex.com/MiscUI/PxMenu.aspx'))
+        self.assertTrue(response['redirectUrl'].startswith('https://account.externaltest.payex.com/MiscUI/PxMenu.aspx'))
         
         # Try to complete the order (even if it's not started by user)
         response = service.complete(orderRef=response['orderRef'])
