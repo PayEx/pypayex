@@ -19,7 +19,7 @@ if sys.argv[-1] == "publish":
 
 # Requirements
 install_requires = [
-    'suds==0.4',
+    'suds==1.0.0',
 ]
 
 if sys.version_info < (2, 7):
